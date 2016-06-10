@@ -1,0 +1,21 @@
+$date
+	Fri Jun 10 14:29:56 2016
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module music $end
+$var wire 1 ! clk $end
+$var wire 1 " speaker $end
+$var reg 16 # counter [15:0] $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx #
+x"
+z!
+$end
