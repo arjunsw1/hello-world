@@ -6,14 +6,18 @@ module stimulus;
    wire z;
    comparator uut(.x(x), .y(x), .z(z));
    //initialize inputs
-   initial begin 
+   initial begin
+      $dumpfile("stimulus.vcd");
+      $dumpvars(0,stimulus);
+      
    x = 0;
    y = 0;
       #20 x=1;
-      #20 y =1;
-      #20 y =0;
-      #20 x =1;
-      #40;
+      #40 y =1;
+      #40 x =0;
+      #60 x =1;
+      #60 y=0;
+      #60 y =1;
    end
 
    initial begin
