@@ -8,20 +8,21 @@ module stimulus;
    //initialize inputs
    initial begin
       $dumpfile("stimulus.vcd");
-      $dumpvars(0,stimulus);
-      
+      $dumpvars(0,stimulus);   
    x = 0;
    y = 0;
-      #20 x=1;
-      #40 y =1;
-      #40 x =0;
-      #60 x =1;
-      #60 y=0;
-      #60 y =1;
+      #100
+      #10 x=1;
+      #10 x = 0;
+      #10 y=1;
+      #10 x=0;
+      #10 x=1;
+      #10 y=0;
+      #10 y=1;
    end
 
    initial begin
-      $monitor("x=%d, y=%d, z=%d \n", x, y, z);
+      $monitor("t = %3d, x=%d, y=%d, z=%d \n", $time, x, y, z);
    end
 endmodule
 
