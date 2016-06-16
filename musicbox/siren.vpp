@@ -1,0 +1,146 @@
+#! /usr/bin/vvp
+:ivl_version "0.9.7 " "(v0_9_7)";
+:vpi_time_precision - 9;
+:vpi_module "system";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_0x843a188 .scope module, "testfile" "testfile" 2 3;
+ .timescale -8 -9;
+v0x845ca58_0 .var "clk", 0 0;
+v0x845cab8_0 .net "speaker", 0 0, v0x845c960_0; 1 drivers
+S_0x845f058 .scope module, "spkr" "music" 2 7, 3 1, S_0x843a188;
+ .timescale 0 0;
+L_0x845ccb0 .functor NOT 7, L_0x845cc60, C4<0000000>, C4<0000000>, C4<0000000>;
+v0x845f0d8_0 .net *"_s1", 0 0, L_0x845cb28; 1 drivers
+v0x845c580_0 .net *"_s10", 1 0, C4<01>; 1 drivers
+v0x845c5e0_0 .net *"_s12", 5 0, C4<000000>; 1 drivers
+v0x845c640_0 .net *"_s3", 6 0, L_0x845cbb8; 1 drivers
+v0x845c6a8_0 .net *"_s5", 6 0, L_0x845cc60; 1 drivers
+v0x845c708_0 .net *"_s6", 6 0, L_0x845ccb0; 1 drivers
+v0x845c788_0 .net "clk", 0 0, v0x845ca58_0; 1 drivers
+v0x845c7e8_0 .net "clkdivider", 14 0, L_0x845ce60; 1 drivers
+v0x845c870_0 .var "counter", 14 0;
+v0x845c8d0_0 .net "ramp", 6 0, L_0x845cd40; 1 drivers
+v0x845c960_0 .var "speaker", 0 0;
+v0x845c9c0_0 .var "tone", 23 0;
+E_0x845db98 .event posedge, v0x845c788_0;
+L_0x845cb28 .part v0x845c9c0_0, 22, 1;
+L_0x845cbb8 .part v0x845c9c0_0, 15, 7;
+L_0x845cc60 .part v0x845c9c0_0, 15, 7;
+L_0x845cd40 .functor MUXZ 7, L_0x845ccb0, L_0x845cbb8, L_0x845cb28, C4<>;
+L_0x845ce60 .concat [ 6 7 2 0], C4<000000>, L_0x845cd40, C4<01>;
+    .scope S_0x845f058;
+T_0 ;
+    %vpi_call 3 3 "$dumpfile", "siren.vcd";
+    %vpi_call 3 4 "$dumpvars", 1'sb0, S_0x845f058;
+    %end;
+    .thread T_0;
+    .scope S_0x845f058;
+T_1 ;
+    %set/v v0x845c960_0, 0, 1;
+    %set/v v0x845c9c0_0, 0, 24;
+    %set/v v0x845c870_0, 0, 15;
+    %end;
+    .thread T_1;
+    .scope S_0x845f058;
+T_2 ;
+    %wait E_0x845db98;
+    %load/v 8, v0x845c9c0_0, 24;
+    %mov 32, 0, 8;
+    %addi 8, 1, 32;
+    %ix/load 0, 24, 0;
+    %assign/v0 v0x845c9c0_0, 0, 8;
+    %jmp T_2;
+    .thread T_2;
+    .scope S_0x845f058;
+T_3 ;
+    %wait E_0x845db98;
+    %load/v 8, v0x845c870_0, 15;
+    %mov 23, 0, 1;
+    %cmpi/u 8, 0, 16;
+    %jmp/0xz  T_3.0, 4;
+    %ix/load 1, 23, 0;
+    %mov 4, 0, 1;
+    %jmp/1 T_3.5, 4;
+    %load/x1p 8, v0x845c9c0_0, 1;
+    %jmp T_3.6;
+T_3.5 ;
+    %mov 8, 2, 1;
+T_3.6 ;
+; Save base=8 wid=1 in lookaside.
+    %jmp/0  T_3.2, 8;
+    %load/v 9, v0x845c7e8_0, 15;
+    %mov 24, 0, 17;
+    %subi 9, 1, 32;
+    %jmp/1  T_3.4, 8;
+T_3.2 ; End of true expr.
+    %load/v 73, v0x845c7e8_0, 15;
+    %mov 88, 0, 1;
+    %movi 89, 2, 16;
+    %div 73, 89, 16;
+    %mov 41, 73, 16;
+    %mov 57, 0, 16;
+    %subi 41, 1, 32;
+    %jmp/0  T_3.3, 8;
+ ; End of false expr.
+    %blend  9, 41, 32; Condition unknown.
+    %jmp  T_3.4;
+T_3.3 ;
+    %mov 9, 41, 32; Return false value
+T_3.4 ;
+    %ix/load 0, 15, 0;
+    %assign/v0 v0x845c870_0, 0, 9;
+    %jmp T_3.1;
+T_3.0 ;
+    %load/v 8, v0x845c870_0, 15;
+    %mov 23, 0, 17;
+    %addi 8, 1, 32;
+    %ix/load 0, 15, 0;
+    %assign/v0 v0x845c870_0, 0, 8;
+T_3.1 ;
+    %jmp T_3;
+    .thread T_3;
+    .scope S_0x845f058;
+T_4 ;
+    %wait E_0x845db98;
+    %load/v 8, v0x845c870_0, 15;
+    %mov 23, 0, 1;
+    %cmpi/u 8, 0, 16;
+    %jmp/0xz  T_4.0, 4;
+    %load/v 8, v0x845c960_0, 1;
+    %inv 8, 1;
+    %ix/load 0, 1, 0;
+    %assign/v0 v0x845c960_0, 0, 8;
+T_4.0 ;
+    %jmp T_4;
+    .thread T_4;
+    .scope S_0x843a188;
+T_5 ;
+    %vpi_call 2 9 "$dumpfile", "testfile.vcd";
+    %vpi_call 2 10 "$dumpvars", 1'sb0, S_0x843a188;
+    %ix/load 0, 1, 0;
+    %assign/v0 v0x845ca58_0, 0, 0;
+    %end;
+    .thread T_5;
+    .scope S_0x843a188;
+T_6 ;
+    %delay 10, 0;
+    %load/v 8, v0x845ca58_0, 1;
+    %inv 8, 1;
+    %set/v v0x845ca58_0, 8, 1;
+    %vpi_call 2 16 "$monitor", "t = %d, clk = %b, spkr = %d\012", $time, v0x845ca58_0, v0x845cab8_0;
+    %movi 8, 1000000, 64;
+    %vpi_func 2 18 "$time", 72, 64;
+    %cmp/u 8, 72, 64;
+    %or 5, 4, 1;
+    %jmp/0xz  T_6.0, 5;
+    %vpi_call 2 19 "$finish", 2'sb01;
+T_6.0 ;
+    %jmp T_6;
+    .thread T_6;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "testfile.v";
+    "siren.v";
